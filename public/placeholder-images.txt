@@ -1,0 +1,11 @@
+The following placeholder images need to be created:
+
+1. logo.png - Shreeji International logo
+2. placeholder-hero.jpg - Hero image for the homepage
+3. placeholder-product.jpg - Generic product image
+4. placeholder-spices.jpg - Spices category image
+5. placeholder-lentils.jpg - Lentils category image
+6. placeholder-rice.jpg - Rice category image
+7. placeholder-flour.jpg - Flour category image
+
+These images should be created and placed in the public directory before running the website.

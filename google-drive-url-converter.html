@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Drive URL Converter</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 50px auto; padding: 20px; }
+        .container { background: #f9f9f9; padding: 20px; border-radius: 8px; }
+        input[type="text"] { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; }
+        button { background: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #45a049; }
+        .result { background: #e8f5e8; padding: 15px; margin: 10px 0; border-radius: 4px; word-break: break-all; }
+        .error { background: #ffe8e8; padding: 15px; margin: 10px 0; border-radius: 4px; }
+        .preview { max-width: 300px; margin: 20px 0; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔄 Google Drive URL Converter</h1>
+        <p>Convert Google Drive share links to direct image URLs for your product images.</p>
+        
+        <h3>Step 1: Paste your Google Drive share link</h3>
+        <input type="text" id="driveUrl" placeholder="https://drive.google.com/file/d/1ABC123DEF456/view?usp=sharing">
+        
+        <button onclick="convertUrl()">Convert to Direct URL</button>
+        
+        <div id="result"></div>
+        
+        <h3>Instructions:</h3>
+        <ol>
+            <li>Upload image to Google Drive</li>
+            <li>Right-click → Share → Anyone with the link</li>
+            <li>Copy the share link</li>
+            <li>Paste it above and click Convert</li>
+            <li>Copy the direct URL to your Google Sheet</li>
+        </ol>
+    </div>
+
+    <script>
+        function convertUrl() {
+            const input = document.getElementById('driveUrl').value.trim();
+            const resultDiv = document.getElementById('result');
+            
+            if (!input) {
+                resultDiv.innerHTML = '<div class="error">Please paste a Google Drive URL</div>';
+                return;
+            }
+            
+            // Extract file ID from Google Drive URL
+            const match = input.match(/\/file\/d\/([a-zA-Z0-9-_]+)/);
+            
+            if (!match) {
+                resultDiv.innerHTML = '<div class="error">Invalid Google Drive URL. Make sure it looks like: https://drive.google.com/file/d/...</div>';
+                return;
+            }
+            
+            const fileId = match[1];
+            const directUrl = `https://drive.google.com/uc?export=view&id=${fileId}`;
+            
+            resultDiv.innerHTML = `
+                <div class="result">
+                    <h4>✅ Direct Image URL:</h4>
+                    <p><strong>Copy this URL to your Google Sheet:</strong></p>
+                    <p>${directUrl}</p>
+                    <button onclick="copyToClipboard('${directUrl}')">Copy URL</button>
+                </div>
+                <div>
+                    <h4>🖼️ Preview:</h4>
+                    <img src="${directUrl}" class="preview" onload="this.style.display='block'" onerror="this.style.display='none'; this.nextSibling.style.display='block'">
+                    <div style="display:none; color:red;">❌ Image failed to load. Check if the file is publicly shared.</div>
+                </div>
+            `;
+        }
+        
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('URL copied to clipboard!');
+            });
+        }
+    </script>
+</body>
+</html>

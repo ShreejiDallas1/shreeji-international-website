@@ -1,0 +1,9 @@
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#F3F4F6"/>
+  <path d="M180 80H220V100C220 111.046 211.046 120 200 120C188.954 120 180 111.046 180 100V80Z" fill="#84CC16"/>
+  <rect x="190" y="120" width="20" height="80" fill="#84CC16"/>
+  <path d="M170 200H230V210C230 215.523 225.523 220 220 220H180C174.477 220 170 215.523 170 210V200Z" fill="#84CC16"/>
+  <circle cx="200" cy="160" r="5" fill="#F3F4F6"/>
+  <circle cx="200" cy="180" r="5" fill="#F3F4F6"/>
+  <text x="200" y="250" font-family="Arial" font-size="24" font-weight="bold" fill="#1F2937" text-anchor="middle">Beverages</text>
+</svg>

@@ -1,0 +1,44 @@
+{
+  "name": "shreeji-international",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "dev:with-db": "node scripts/start-dev.js",
+    "setup-google": "node scripts/setup-google-service-account.js",
+    "sync-products": "curl http://localhost:3000/api/sync-products?key=shreeji_sync_api_2024"
+  },
+  "dependencies": {
+    "@google-cloud/local-auth": "^3.0.1",
+    "@google/generative-ai": "^0.24.1",
+    "@hookform/resolvers": "^5.1.1",
+    "@square/web-sdk": "^2.1.0",
+    "firebase": "^11.9.1",
+    "framer-motion": "^12.16.0",
+    "googleapis": "^150.0.1",
+    "lru-cache": "^11.1.0",
+    "next": "15.3.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-firebase-hooks": "^5.1.1",
+    "react-hook-form": "^7.57.0",
+    "react-hot-toast": "^2.5.2",
+    "react-icons": "^5.5.0",
+    "ups-api": "^1.0.3",
+    "zod": "^3.25.57"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20.19.1",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.3",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
