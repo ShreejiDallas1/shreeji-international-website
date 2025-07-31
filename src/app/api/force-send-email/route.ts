@@ -23,13 +23,9 @@ export async function POST(request: NextRequest) {
     console.log(`📧 Verification code: ${testCode}`);
     
     if (useRealEmail) {
-      // Try to send real email by temporarily overriding environment
-      const originalNodeEnv = process.env.NODE_ENV;
-      process.env.NODE_ENV = 'production'; // Temporarily set to production
-      
+      // Try to send real email
       try {
         const result = await EmailSender.sendVerificationCode(email, testCode);
-        process.env.NODE_ENV = originalNodeEnv; // Restore original
         
         return NextResponse.json({
           success: result.success,
@@ -39,7 +35,6 @@ export async function POST(request: NextRequest) {
           mode: 'REAL_EMAIL'
         });
       } catch (error: any) {
-        process.env.NODE_ENV = originalNodeEnv; // Restore original
         throw error;
       }
     } else {
