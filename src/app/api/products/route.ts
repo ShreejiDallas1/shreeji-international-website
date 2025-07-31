@@ -1,22 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/firebase';
 import { collection, getDocs, query, limit } from 'firebase/firestore';
-import { trackFunction, trackRequest } from '@/lib/resource-monitor';
-import { checkCircuitBreaker } from '@/lib/circuit-breaker';
 
 export async function GET(request: NextRequest) {
   try {
-    // Track function invocation for monitoring
-    trackFunction();
-    
-    // Check circuit breaker for function invocations (skip during build)
-    if (process.env.NODE_ENV === 'production' && process.env.VERCEL_ENV !== 'preview') {
-      const breakerCheck = checkCircuitBreaker('FUNCTION_INVOCATIONS', 125);
-      if (breakerCheck.blocked) {
-        return NextResponse.json(breakerCheck.response, { status: 503 });
-      }
-    }
-    
     console.log('🔄 Fetching products from Firebase...');
     
     const productsRef = collection(db, 'products');
@@ -43,9 +30,7 @@ export async function GET(request: NextRequest) {
     // Cache for 5 minutes, stale-while-revalidate for 10 minutes
     response.headers.set('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=600');
     
-    // Track response size for monitoring
-    const responseSize = JSON.stringify({ success: true, products, count: products.length }).length;
-    trackRequest(responseSize);
+    // Removed resource tracking to prevent Firebase interference
     
     return response;
     

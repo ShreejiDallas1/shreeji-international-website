@@ -93,21 +93,9 @@ export default function ProductsPageOptimized() {
     }));
   }, [products]);
 
-  // Client-side cache for products (5 minutes)
-  const [cachedProducts, setCachedProducts] = useState<{data: Product[], timestamp: number} | null>(null);
-  
-  // Optimized fetch function with caching
+  // Optimized fetch function
   const fetchProducts = useCallback(async () => {
     try {
-      // Check cache first (5 minutes = 300000ms)
-      const now = Date.now();
-      if (cachedProducts && (now - cachedProducts.timestamp) < 300000) {
-        console.log('📦 Using cached products');
-        setProducts(cachedProducts.data);
-        setLoading(false);
-        return;
-      }
-      
       setLoading(true);
       console.log('🔄 Fetching products...', { categoryParam, searchParam });
       const productsCollection = collection(db, 'products');
@@ -145,8 +133,6 @@ export default function ProductsPageOptimized() {
       });
       
       setProducts(productsData);
-      // Cache the results
-      setCachedProducts({ data: productsData, timestamp: Date.now() });
       console.log(`✅ Loaded ${productsData.length} products`);
       
       // Debug: Show all categories in products
