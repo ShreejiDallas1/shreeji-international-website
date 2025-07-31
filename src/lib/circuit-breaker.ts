@@ -76,16 +76,22 @@ export function checkCircuitBreaker(
   resourceType: keyof typeof VERCEL_LIMITS,
   currentUsage: number
 ): { blocked: boolean; response?: any } {
-  const breaker = CircuitBreaker.getInstance();
-  
-  if (breaker.shouldBlock(resourceType, currentUsage)) {
-    return {
-      blocked: true,
-      response: breaker.getFallbackResponse(resourceType)
-    };
+  try {
+    const breaker = CircuitBreaker.getInstance();
+    
+    if (breaker.shouldBlock(resourceType, currentUsage)) {
+      return {
+        blocked: true,
+        response: breaker.getFallbackResponse(resourceType)
+      };
+    }
+    
+    return { blocked: false };
+  } catch (error) {
+    // Fail safe - don't block if circuit breaker fails
+    console.warn('Circuit breaker check failed:', error);
+    return { blocked: false };
   }
-  
-  return { blocked: false };
 }
 
 // Export singleton instance

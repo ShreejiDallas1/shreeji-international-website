@@ -9,10 +9,12 @@ export async function GET(request: NextRequest) {
     // Track function invocation for monitoring
     trackFunction();
     
-    // Check circuit breaker for function invocations
-    const breakerCheck = checkCircuitBreaker('FUNCTION_INVOCATIONS', 125); // Current usage
-    if (breakerCheck.blocked) {
-      return NextResponse.json(breakerCheck.response, { status: 503 });
+    // Check circuit breaker for function invocations (skip during build)
+    if (process.env.NODE_ENV === 'production' && process.env.VERCEL_ENV !== 'preview') {
+      const breakerCheck = checkCircuitBreaker('FUNCTION_INVOCATIONS', 125);
+      if (breakerCheck.blocked) {
+        return NextResponse.json(breakerCheck.response, { status: 503 });
+      }
     }
     
     console.log('🔄 Fetching products from Firebase...');

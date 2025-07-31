@@ -58,13 +58,23 @@ export class ResourceMonitor {
 
 // Middleware to track requests
 export function trackRequest(size: number = 0) {
-  if (typeof window === 'undefined') { // Server-side only
-    ResourceMonitor.getInstance().trackRequest(size);
+  try {
+    if (typeof window === 'undefined') { // Server-side only
+      ResourceMonitor.getInstance().trackRequest(size);
+    }
+  } catch (error) {
+    // Silently fail during build to prevent build errors
+    console.warn('Resource tracking failed:', error);
   }
 }
 
 export function trackFunction() {
-  if (typeof window === 'undefined') { // Server-side only
-    ResourceMonitor.getInstance().trackFunction();
+  try {
+    if (typeof window === 'undefined') { // Server-side only
+      ResourceMonitor.getInstance().trackFunction();
+    }
+  } catch (error) {
+    // Silently fail during build to prevent build errors
+    console.warn('Function tracking failed:', error);
   }
 }
