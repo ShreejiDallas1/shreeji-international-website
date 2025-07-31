@@ -23,19 +23,36 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  // Fix for browser back button issue
+  // Optimized caching for Vercel limits
   async headers() {
     return [
       {
-        source: '/:path*',
+        // Cache static assets aggressively
+        source: '/images/:path*',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'no-store, must-revalidate',
+            value: 'public, max-age=31536000, immutable',
           },
+        ],
+      },
+      {
+        // Cache API responses for 5 minutes
+        source: '/api/products',
+        headers: [
           {
-            key: 'Pragma',
-            value: 'no-cache',
+            key: 'Cache-Control',
+            value: 'public, s-maxage=300, stale-while-revalidate=600',
+          },
+        ],
+      },
+      {
+        // Cache pages for 1 hour, revalidate in background
+        source: '/((?!api|_next/static|_next/image|favicon.ico).*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, s-maxage=3600, stale-while-revalidate=86400',
           },
         ],
       },

@@ -2,9 +2,27 @@ import { NextRequest, NextResponse } from 'next/server';
 import { squareService, transformSquareProduct, transformSquareCategory } from '@/lib/square-simple';
 import { db } from '@/lib/firebase';
 import { collection, getDocs, setDoc, doc } from 'firebase/firestore';
+import { trackFunction } from '@/lib/resource-monitor';
+
+// Rate limiting for expensive sync operations
+const lastSyncTime = new Map<string, number>();
 
 export async function POST(request: NextRequest) {
   try {
+    trackFunction();
+    
+    // Rate limiting: Only allow sync once per hour per IP
+    const clientIP = request.headers.get('x-forwarded-for') || 'unknown';
+    const now = Date.now();
+    const lastSync = lastSyncTime.get(clientIP) || 0;
+    
+    if (now - lastSync < 3600000) { // 1 hour = 3600000ms
+      return NextResponse.json(
+        { error: 'Rate limited: Sync allowed once per hour', nextAllowed: new Date(lastSync + 3600000) },
+        { status: 429 }
+      );
+    }
+    
     console.log('🔄 Starting Square to Firestore product sync...');
     
     // Check for API key for security
@@ -63,6 +81,9 @@ export async function POST(request: NextRequest) {
     }
     
     console.log(`✅ Successfully synced ${syncedCount} products and ${categoriesSynced} categories from Square`);
+    
+    // Update rate limiting timestamp
+    lastSyncTime.set(clientIP, now);
     
     return NextResponse.json({
       success: true,
