@@ -12,3 +12,5 @@
 - **Business Hours**: Monday-Friday, 10 AM - 5 PM
 - **Market**: Wholesale B2B (restaurants, retailers, businesses)
 - **Geographic Scope**: United States only
+
+<!-- Build fix: Force new Vercel deployment -->
