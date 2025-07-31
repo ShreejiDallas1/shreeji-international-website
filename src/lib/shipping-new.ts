@@ -33,13 +33,13 @@ interface ShippingRate {
 }
 
 // Your warehouse location in Dallas, TX
-const WAREHOUSE_ADDRESS = {
-  street: '1162 Security Drive',
-  city: 'Dallas',
-  state: 'TX',
-  zipCode: '75207',
-  country: 'US'
-};
+// const WAREHOUSE_ADDRESS = {
+//   street: '1162 Security Drive',
+//   city: 'Dallas',
+//   state: 'TX',
+//   zipCode: '75207',
+//   country: 'US'
+// };
 
 export class ShippingCalculator {
   // Default shipping rates (fallback when real APIs are not available)
@@ -88,7 +88,7 @@ export class ShippingCalculator {
           console.log('✅ Using USPS API rates');
           return uspsRates;
         }
-      } catch (error) {
+      } catch {
         console.log('⚠️ USPS API not available, using calculated rates');
       }
 
@@ -187,8 +187,8 @@ export class ShippingCalculator {
 
   // USPS API integration (placeholder for future implementation)
   private static async getUSPSRates(
-    packageDetails: any,
-    address: ShippingAddress
+    _packageDetails: any,
+    _address: ShippingAddress
   ): Promise<ShippingRate[]> {
     // USPS API will be implemented later
     // For now, always use calculated rates which work great

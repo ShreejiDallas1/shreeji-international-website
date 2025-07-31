@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAppContext } from '@/lib/context';
 import Link from 'next/link';
-import { FiUser, FiShoppingBag, FiClock, FiEdit, FiLogOut, FiArrowLeft } from 'react-icons/fi';
+import { FiClock, FiArrowLeft } from 'react-icons/fi';
 
 export default function OrderHistoryPage() {
   const { user, loading } = useAppContext();
@@ -30,7 +30,7 @@ export default function OrderHistoryPage() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-5xl">
       <div className="flex items-center mb-6">
-        <Link href="/account" className="mr-4 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+        <Link href="/dashboard" className="mr-4 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
           <FiArrowLeft className="w-5 h-5" />
         </Link>
         <h1 className="text-3xl font-bold">Order History</h1>
@@ -39,7 +39,7 @@ export default function OrderHistoryPage() {
       <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
         <div className="py-8 text-center text-gray-600 dark:text-gray-400">
           <FiClock className="w-12 h-12 mx-auto mb-4 opacity-50" />
-          <p>You don't have any order history yet.</p>
+          <p>You don&apos;t have any order history yet.</p>
           <Link
             href="/products"
             className="inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"

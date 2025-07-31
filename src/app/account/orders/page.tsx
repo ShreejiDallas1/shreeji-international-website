@@ -120,11 +120,11 @@ export default function OrdersPage() {
       {/* Header */}
       <div className="mb-8">
         <Link
-          href="/account"
+          href="/dashboard"
           className="inline-flex items-center text-lime-600 hover:text-lime-700 mb-4"
         >
           <FiArrowLeft className="mr-2" />
-          Back to Account
+          Back to Dashboard
         </Link>
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white">My Orders</h1>
         <p className="text-gray-600 dark:text-gray-400 mt-2">

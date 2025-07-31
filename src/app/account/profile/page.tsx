@@ -59,7 +59,7 @@ export default function ProfilePage() {
         updatedAt: new Date().toISOString(),
       });
       toast.success('Profile updated successfully!');
-      router.push('/account');
+      router.push('/dashboard');
     } catch (error) {
       console.error('Error updating profile:', error);
       toast.error('Failed to update profile. Please try again.');

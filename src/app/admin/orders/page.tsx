@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAppContext } from '@/lib/context';
 import { useRouter } from 'next/navigation';
-import { FiPackage, FiClock, FiTruck, FiCheckCircle, FiXCircle, FiEye, FiEdit } from 'react-icons/fi';
+import { FiPackage, FiClock, FiTruck, FiCheckCircle, FiXCircle } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 import { collection, getDocs, doc, updateDoc, query, orderBy } from 'firebase/firestore';
 import { db } from '@/lib/firebase';

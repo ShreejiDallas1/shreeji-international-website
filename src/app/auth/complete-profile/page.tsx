@@ -78,8 +78,8 @@ export default function CompleteProfilePage() {
         updatedAt: new Date().toISOString(),
       });
 
-      // Redirect to dashboard or home
-      router.push('/account');
+      // Redirect to dashboard
+      router.push('/dashboard');
     } catch (err: any) {
       console.error('Error saving profile:', err);
       setError(err.message || 'Failed to save profile');

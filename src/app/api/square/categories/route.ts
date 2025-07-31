@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
     
     // Calculate product count for each category
     const categoryProductCounts: { [key: string]: number } = {};
-    squareProducts.forEach(product => {
+    squareProducts.forEach((product: any) => {
       const categoryId = product.item_data?.category_id;
       if (categoryId) {
         categoryProductCounts[categoryId] = (categoryProductCounts[categoryId] || 0) + 1;

@@ -1,14 +1,17 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { db } from '@/lib/firebase';
+import { db, auth } from '@/lib/firebase';
 import { collection, addDoc, getDocs, query, limit, doc, setDoc } from 'firebase/firestore';
+import { sendPasswordResetEmail } from 'firebase/auth';
 
 export default function FirebaseTestPage() {
   const [testResult, setTestResult] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [initialized, setInitialized] = useState(false);
+  const [testEmail, setTestEmail] = useState('');
+  const [resetResult, setResetResult] = useState<string>('');
 
   // Check if Firebase is initialized
   useEffect(() => {
@@ -70,6 +73,34 @@ export default function FirebaseTestPage() {
     }
   };
 
+  const testPasswordReset = async () => {
+    if (!testEmail) {
+      setResetResult('Please enter an email');
+      return;
+    }
+
+    setLoading(true);
+    setResetResult('');
+
+    try {
+      console.log('Testing Firebase password reset for:', testEmail);
+      console.log('Auth object:', auth);
+      console.log('App URL:', process.env.NEXT_PUBLIC_APP_URL);
+
+      await sendPasswordResetEmail(auth, testEmail, {
+        url: `${process.env.NEXT_PUBLIC_APP_URL}/auth/reset-password`,
+        handleCodeInApp: false
+      });
+
+      setResetResult('✅ SUCCESS: Password reset email sent successfully!');
+    } catch (error: any) {
+      console.error('Firebase password reset test error:', error);
+      setResetResult(`❌ ERROR: ${error.code} - ${error.message}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-6">Firebase Test Page</h1>
@@ -114,6 +145,41 @@ export default function FirebaseTestPage() {
         </div>
       </div>
       
+      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md mb-8">
+        <h2 className="text-xl font-semibold mb-4">Password Reset Test</h2>
+        
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium mb-2">Test Email:</label>
+            <input
+              type="email"
+              value={testEmail}
+              onChange={(e) => setTestEmail(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              placeholder="Enter email to test password reset"
+            />
+          </div>
+
+          <button
+            onClick={testPasswordReset}
+            disabled={loading || !initialized}
+            className="px-4 py-2 bg-lime-600 text-white rounded-md hover:bg-lime-700 disabled:opacity-50"
+          >
+            {loading ? 'Testing...' : 'Test Password Reset'}
+          </button>
+
+          {resetResult && (
+            <div className={`p-4 rounded-md ${
+              resetResult.includes('SUCCESS') 
+                ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' 
+                : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+            }`}>
+              <pre className="text-sm whitespace-pre-wrap">{resetResult}</pre>
+            </div>
+          )}
+        </div>
+      </div>
+
       <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
         <h2 className="text-xl font-semibold mb-4">Firebase Configuration</h2>
         <pre className="text-xs overflow-auto max-h-60 bg-gray-100 dark:bg-gray-700 p-4 rounded-md">

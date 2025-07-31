@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { FiMail, FiLock, FiUser, FiAlertCircle, FiBriefcase } from 'react-icons/fi';
+import { FiMail, FiLock, FiUser, FiAlertCircle, FiBriefcase, FiEye, FiEyeOff } from 'react-icons/fi';
 import { FcGoogle } from 'react-icons/fc';
 import { useAppContext } from '@/lib/context';
 import Button from '@/components/Button';
@@ -14,12 +14,17 @@ import { motion } from 'framer-motion';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
-// Form validation schema
+// Form validation schema with strong password requirements
 const registerSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   email: z.string().email('Please enter a valid email address'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
-  confirmPassword: z.string().min(6, 'Password must be at least 6 characters'),
+  password: z.string()
+    .min(8, 'Password must be at least 8 characters')
+    .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
+    .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
+    .regex(/[0-9]/, 'Password must contain at least one number')
+    .regex(/[^A-Za-z0-9]/, 'Password must contain at least one special character'),
+  confirmPassword: z.string(),
   businessName: z.string().min(2, 'Business name must be at least 2 characters'),
   businessType: z.string().min(2, 'Business type must be at least 2 characters'),
   agreeTerms: z.boolean().refine(val => val === true, {
@@ -32,18 +37,80 @@ const registerSchema = z.object({
 
 type RegisterFormData = z.infer<typeof registerSchema>;
 
+// Password strength indicator component
+function PasswordStrengthIndicator({ password }: { password: string }) {
+  const requirements = [
+    { label: 'At least 8 characters', test: (p: string) => p.length >= 8 },
+    { label: 'One uppercase letter', test: (p: string) => /[A-Z]/.test(p) },
+    { label: 'One lowercase letter', test: (p: string) => /[a-z]/.test(p) },
+    { label: 'One number', test: (p: string) => /[0-9]/.test(p) },
+    { label: 'One special character', test: (p: string) => /[^A-Za-z0-9]/.test(p) },
+  ];
+
+  const metRequirements = requirements.filter(req => req.test(password)).length;
+  const strength = metRequirements / requirements.length;
+
+  const getStrengthColor = () => {
+    if (strength < 0.4) return 'bg-red-500';
+    if (strength < 0.8) return 'bg-yellow-500';
+    return 'bg-green-500';
+  };
+
+  const getStrengthText = () => {
+    if (strength < 0.4) return 'Weak';
+    if (strength < 0.8) return 'Medium';
+    return 'Strong';
+  };
+
+  return (
+    <div className="mt-2">
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-xs text-gray-500 dark:text-gray-400">Password strength:</span>
+        <span className={`text-xs font-medium ${
+          strength < 0.4 ? 'text-red-500' : 
+          strength < 0.8 ? 'text-yellow-500' : 'text-green-500'
+        }`}>
+          {getStrengthText()}
+        </span>
+      </div>
+      <div className="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2">
+        <div 
+          className={`h-2 rounded-full transition-all duration-300 ${getStrengthColor()}`}
+          style={{ width: `${strength * 100}%` }}
+        />
+      </div>
+      <div className="mt-2 space-y-1">
+        {requirements.map((req, index) => (
+          <div key={index} className="flex items-center text-xs">
+            <div className={`w-2 h-2 rounded-full mr-2 ${
+              req.test(password) ? 'bg-green-500' : 'bg-gray-400'
+            }`} />
+            <span className={req.test(password) ? 'text-green-600 dark:text-green-400' : 'text-gray-500 dark:text-gray-400'}>
+              {req.label}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function RegisterPage() {
   const router = useRouter();
   const { register: registerUser, signInWithGoogle, user } = useAppContext();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   
-  const { register, handleSubmit, formState: { errors } } = useForm<RegisterFormData>({
+  const { register, handleSubmit, formState: { errors }, watch } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       agreeTerms: false,
     },
   });
+
+  const watchPassword = watch('password', '');
   
   const onSubmit = async (data: RegisterFormData) => {
     setIsLoading(true);
@@ -199,18 +266,30 @@ export default function RegisterPage() {
                     </div>
                     <input
                       id="password"
-                      type="password"
+                      type={showPassword ? 'text' : 'password'}
                       autoComplete="new-password"
                       {...register('password')}
-                      className={`appearance-none block w-full pl-10 pr-3 py-2 border ${
+                      className={`appearance-none block w-full pl-10 pr-10 py-2 border ${
                         errors.password ? 'border-red-300 dark:border-red-600' : 'border-gray-300 dark:border-gray-600'
                       } rounded-md shadow-sm placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-lime-500 focus:border-lime-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white`}
                       placeholder="Password"
                     />
+                    <button
+                      type="button"
+                      className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? (
+                        <FiEyeOff className="h-5 w-5 text-gray-400 hover:text-gray-300" />
+                      ) : (
+                        <FiEye className="h-5 w-5 text-gray-400 hover:text-gray-300" />
+                      )}
+                    </button>
                   </div>
                   {errors.password && (
                     <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.password.message}</p>
                   )}
+                  {watchPassword && <PasswordStrengthIndicator password={watchPassword} />}
                 </div>
                 
                 <div>
@@ -223,14 +302,25 @@ export default function RegisterPage() {
                     </div>
                     <input
                       id="confirmPassword"
-                      type="password"
+                      type={showConfirmPassword ? 'text' : 'password'}
                       autoComplete="new-password"
                       {...register('confirmPassword')}
-                      className={`appearance-none block w-full pl-10 pr-3 py-2 border ${
+                      className={`appearance-none block w-full pl-10 pr-10 py-2 border ${
                         errors.confirmPassword ? 'border-red-300 dark:border-red-600' : 'border-gray-300 dark:border-gray-600'
                       } rounded-md shadow-sm placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-lime-500 focus:border-lime-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white`}
                       placeholder="Confirm Password"
                     />
+                    <button
+                      type="button"
+                      className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    >
+                      {showConfirmPassword ? (
+                        <FiEyeOff className="h-5 w-5 text-gray-400 hover:text-gray-300" />
+                      ) : (
+                        <FiEye className="h-5 w-5 text-gray-400 hover:text-gray-300" />
+                      )}
+                    </button>
                   </div>
                   {errors.confirmPassword && (
                     <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.confirmPassword.message}</p>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { collection, getDocs, query, where, orderBy, limit } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
@@ -44,11 +44,31 @@ export default function ProductsPageOptimized() {
   const [showFilters, setShowFilters] = useState(false);
   const [searchQuery, setSearchQuery] = useState(searchParam || '');
   const [selectedCategory, setSelectedCategory] = useState(categoryParam || '');
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 2000]);
-  const [maxPrice, setMaxPrice] = useState(2000);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 100]);
+  const [maxPrice, setMaxPrice] = useState(100);
   const [sortBy, setSortBy] = useState('name-asc');
   const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage] = useState(12);
+  const [productsPerPage] = useState(24); // Increased for better performance with large datasets
+  const [loadMoreMode, setLoadMoreMode] = useState(false); // Toggle between pagination and load more
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState(searchQuery);
+  const searchTimeoutRef = useRef<NodeJS.Timeout>();
+  
+  // Debounced search for better performance with large datasets
+  useEffect(() => {
+    if (searchTimeoutRef.current) {
+      clearTimeout(searchTimeoutRef.current);
+    }
+    
+    searchTimeoutRef.current = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery);
+    }, 300); // 300ms delay
+    
+    return () => {
+      if (searchTimeoutRef.current) {
+        clearTimeout(searchTimeoutRef.current);
+      }
+    };
+  }, [searchQuery]);
   
   // Categories state
   const [categories, setCategories] = useState<{id: string, name: string, slug: string, count: number}[]>([]);
@@ -119,7 +139,7 @@ export default function ProductsPageOptimized() {
       const allCategories = [...new Set(productsData.map(p => p.category))];
       console.log('📊 All categories in products:', allCategories);
       
-      // Set dynamic price range based on actual product prices
+      // Set dynamic price range based on actual product prices (already in USD)
       if (productsData.length > 0) {
         const prices = productsData.map(p => p.price).filter(p => p > 0);
         if (prices.length > 0) {
@@ -161,13 +181,14 @@ export default function ProductsPageOptimized() {
   const filteredAndSortedProducts = useMemo(() => {
     let result = [...products];
     
-    // Filter by search query
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase();
+    // Filter by search query (using debounced search for better performance)
+    if (debouncedSearchQuery) {
+      const query = debouncedSearchQuery.toLowerCase();
       result = result.filter(product => 
         product.name.toLowerCase().includes(query) ||
         product.description.toLowerCase().includes(query) ||
-        product.category.toLowerCase().includes(query)
+        product.category.toLowerCase().includes(query) ||
+        product.brand?.toLowerCase().includes(query)
       );
     }
     
@@ -188,7 +209,7 @@ export default function ProductsPageOptimized() {
       console.log('🔍 First few products after filtering:', result.slice(0, 3).map(p => ({ name: p.name, category: p.category })));
     }
     
-    // Filter by price range
+    // Filter by price range (prices are already in USD)
     result = result.filter(product => 
       product.price >= priceRange[0] && product.price <= priceRange[1]
     );
@@ -219,7 +240,7 @@ export default function ProductsPageOptimized() {
     }
     
     return result;
-  }, [products, searchQuery, selectedCategory, priceRange, sortBy]);
+  }, [products, debouncedSearchQuery, selectedCategory, priceRange, sortBy]);
 
   // Pagination
   const paginatedProducts = useMemo(() => {
@@ -263,11 +284,20 @@ export default function ProductsPageOptimized() {
               <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-2">
                 Products
               </h1>
-              <p className="text-lg text-gray-600 dark:text-gray-300">
-                {filteredAndSortedProducts.length} products found
-                {selectedCategory && ` in ${selectedCategory}`}
-                {searchQuery && ` for "${searchQuery}"`}
-              </p>
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                <p className="text-lg text-gray-600 dark:text-gray-300">
+                  {filteredAndSortedProducts.length} of {products.length} products
+                  {selectedCategory && ` in ${selectedCategory}`}
+                  {searchQuery && ` for "${searchQuery}"`}
+                  {totalPages > 1 && ` • Page ${currentPage} of ${totalPages}`}
+                </p>
+                {products.length > 50 && (
+                  <div className="flex items-center mt-2 sm:mt-0 text-sm text-green-600 dark:text-green-400">
+                    <div className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+                    Optimized for {products.length}+ products
+                  </div>
+                )}
+              </div>
             </div>
             
             {/* View Toggle */}
@@ -381,7 +411,7 @@ export default function ProductsPageOptimized() {
                       />
                     </div>
                     <div className="text-sm text-gray-600 dark:text-gray-400">
-                      Range: ₹{priceRange[0]} - ₹{priceRange[1]}
+                      Range: ${priceRange[0]} - ${priceRange[1]} USD
                     </div>
                   </div>
                 </div>
@@ -422,7 +452,7 @@ export default function ProductsPageOptimized() {
             <>
               <div className={
                 viewMode === 'grid' 
-                  ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'
+                  ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6'
                   : 'space-y-4'
               }>
                 <AnimatePresence mode="popLayout">
@@ -434,8 +464,8 @@ export default function ProductsPageOptimized() {
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.9 }}
                       transition={{ 
-                        duration: 0.3,
-                        delay: index * 0.05
+                        duration: 0.2,
+                        delay: Math.min(index * 0.02, 0.5) // Cap delay for large datasets
                       }}
                     >
                       <ProductCard 
@@ -464,22 +494,48 @@ export default function ProductsPageOptimized() {
                     Previous
                   </Button>
                   
-                  {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-                    const page = i + 1;
-                    return (
-                      <button
-                        key={page}
-                        onClick={() => setCurrentPage(page)}
-                        className={`px-3 py-2 rounded-md ${
-                          currentPage === page
-                            ? 'bg-lime-500 text-white'
-                            : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
-                        }`}
-                      >
-                        {page}
-                      </button>
-                    );
-                  })}
+                  {/* Smart pagination for large datasets */}
+                  {(() => {
+                    const maxVisiblePages = 7;
+                    const pages = [];
+                    
+                    if (totalPages <= maxVisiblePages) {
+                      // Show all pages if total is small
+                      for (let i = 1; i <= totalPages; i++) {
+                        pages.push(i);
+                      }
+                    } else {
+                      // Smart pagination for large datasets
+                      if (currentPage <= 4) {
+                        // Show first pages + ellipsis + last
+                        pages.push(1, 2, 3, 4, 5, '...', totalPages);
+                      } else if (currentPage >= totalPages - 3) {
+                        // Show first + ellipsis + last pages
+                        pages.push(1, '...', totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
+                      } else {
+                        // Show first + ellipsis + current area + ellipsis + last
+                        pages.push(1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages);
+                      }
+                    }
+                    
+                    return pages.map((page, index) => (
+                      page === '...' ? (
+                        <span key={`ellipsis-${index}`} className="px-3 py-2 text-gray-500">...</span>
+                      ) : (
+                        <button
+                          key={page}
+                          onClick={() => setCurrentPage(page as number)}
+                          className={`px-3 py-2 rounded-md transition-colors ${
+                            currentPage === page
+                              ? 'bg-lime-500 text-white'
+                              : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                          }`}
+                        >
+                          {page}
+                        </button>
+                      )
+                    ));
+                  })()}
                   
                   <Button
                     variant="outline"
@@ -498,25 +554,53 @@ export default function ProductsPageOptimized() {
               animate={{ opacity: 1 }}
             >
               <div className="max-w-md mx-auto">
-                <div className="text-6xl mb-4">📦</div>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                  No products found
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-6">
-                  Try adjusting your search criteria or browse all categories
-                </p>
-                <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                  <Button onClick={() => {
-                    setSearchQuery('');
-                    setSelectedCategory('');
-                    setPriceRange([0, maxPrice]);
-                  }}>
-                    Clear Filters
-                  </Button>
-                  <Button variant="outline" onClick={() => window.location.href = '/products'}>
-                    View All Products
-                  </Button>
-                </div>
+                {products.length === 0 ? (
+                  // No products at all - Coming Soon
+                  <>
+                    <div className="text-6xl mb-6">🚀</div>
+                    <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+                      Products Coming Soon!
+                    </h3>
+                    <p className="text-lg text-gray-600 dark:text-gray-400 mb-8">
+                      We're working hard to bring you the best wholesale Indian grocery products. 
+                      Our catalog will be available very soon!
+                    </p>
+                    <div className="bg-gradient-to-r from-lime-50 to-green-50 dark:from-lime-900/20 dark:to-green-900/20 p-6 rounded-xl border border-lime-200 dark:border-lime-800">
+                      <h4 className="font-semibold text-lime-800 dark:text-lime-300 mb-2">
+                        What to expect:
+                      </h4>
+                      <ul className="text-sm text-lime-700 dark:text-lime-400 space-y-1">
+                        <li>• Premium quality Indian groceries</li>
+                        <li>• Wholesale pricing for businesses</li>
+                        <li>• Fast nationwide shipping</li>
+                        <li>• 100+ products across all categories</li>
+                      </ul>
+                    </div>
+                  </>
+                ) : (
+                  // Products exist but filtered out
+                  <>
+                    <div className="text-6xl mb-4">📦</div>
+                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                      No products found
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-400 mb-6">
+                      Try adjusting your search criteria or browse all categories
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                      <Button onClick={() => {
+                        setSearchQuery('');
+                        setSelectedCategory('');
+                        setPriceRange([0, maxPrice]);
+                      }}>
+                        Clear Filters
+                      </Button>
+                      <Button variant="outline" onClick={() => window.location.href = '/products'}>
+                        View All Products
+                      </Button>
+                    </div>
+                  </>
+                )}
               </div>
             </motion.div>
           )}

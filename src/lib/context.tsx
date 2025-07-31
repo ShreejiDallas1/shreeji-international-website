@@ -13,6 +13,9 @@ type AppContextType = {
   login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
   register: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
   logout: () => Promise<{ success: boolean; error?: string }>;
+  sendPasswordResetCode: (email: string) => Promise<{ success: boolean; error?: string }>;
+  verifyResetCode: (email: string, code: string) => Promise<{ success: boolean; error?: string }>;
+  resetPasswordWithCode: (email: string, code: string, newPassword: string) => Promise<{ success: boolean; error?: string }>;
   
   // Cart
   cart: CartItem[];
@@ -106,6 +109,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
     login: auth.login,
     register: auth.register,
     logout: auth.logout,
+    sendPasswordResetCode: auth.sendPasswordResetCode,
+    verifyResetCode: auth.verifyResetCode,
+    resetPasswordWithCode: auth.resetPasswordWithCode,
     
     // Cart
     cart: cartHook.cart,

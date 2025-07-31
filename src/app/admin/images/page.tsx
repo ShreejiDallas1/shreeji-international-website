@@ -26,7 +26,7 @@ export default function AdminImagesPage() {
   const { isAdmin } = useAdmin();
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState<Product[]>([]);
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+
   const [uploading, setUploading] = useState<string | null>(null);
 
   useEffect(() => {
