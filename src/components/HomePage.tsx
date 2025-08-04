@@ -55,7 +55,7 @@ export default function HomePage() {
   const { productsRefreshTrigger } = useAppContext();
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  const [currentTextIndex, setCurrentTextIndex] = useState(0);
+  // Removed currentTextIndex state - no longer using rotating text
 
 
   // Fetch featured products
@@ -107,25 +107,7 @@ export default function HomePage() {
     fetchSquareCategories();
   }, [productsRefreshTrigger]);
 
-  // Cycling text animation for product showcase
-  const rotatingTexts = useMemo(() => [
-    'Premium Basmati Rice',
-    'Authentic Spices',
-    'Fresh Lentils & Pulses',
-    'Traditional Flours',
-    'Pure Cooking Oils',
-    'Organic Grains',
-    'Gourmet Snacks',
-    'Natural Seasonings'
-  ], []);
-
-  // Update cycling text every 3 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTextIndex((prev) => (prev + 1) % rotatingTexts.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [rotatingTexts.length]);
+  // Removed rotating text animation - now using static text
 
   // Get categories from Square instead of auto-generating them
   const fetchSquareCategories = async () => {
@@ -240,16 +222,9 @@ export default function HomePage() {
                   transition={{ delay: 0.2 }}
                 >
                   <span className="block">Discover</span>
-                  <motion.span 
-                    className="block bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent min-h-[1.2em]"
-                    key={currentTextIndex}
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -50 }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    {rotatingTexts[currentTextIndex]}
-                  </motion.span>
+                  <span className="block bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent">
+                    Premium Indian Groceries
+                  </span>
                 </motion.h1>
                 
                 <motion.p
@@ -260,7 +235,7 @@ export default function HomePage() {
                 >
                   Wholesale authentic Indian groceries and specialty foods. 
                   <span className="block mt-2 text-lg text-lime-200">
-                    US Only • Premium Quality • Fast Delivery
+                    US Only • Premium Quality • Wholesale Pricing
                   </span>
                 </motion.p>
               </div>
@@ -334,7 +309,19 @@ export default function HomePage() {
           </motion.div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {categories.map((category, index) => (
+            {categories.length === 0 ? (
+              // Categories coming soon placeholder
+              <div className="col-span-full text-center py-16">
+                <div className="text-6xl mb-6">📦</div>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                  Categories Coming Soon!
+                </h3>
+                <p className="text-lg text-gray-600 dark:text-gray-400 max-w-md mx-auto">
+                  We're organizing our product categories to make shopping easier for you.
+                </p>
+              </div>
+            ) : (
+              categories.map((category, index) => (
               <motion.div
                 key={category.name}
                 className="group"
@@ -356,7 +343,8 @@ export default function HomePage() {
                   <h3 className="text-xl font-bold">{category.name}</h3>
                 </Link>
               </motion.div>
-            ))}
+              ))
+            )}
           </div>
         </div>
       </motion.section>

@@ -50,7 +50,7 @@ const FooterOptimized = () => {
     { name: 'Wholesale Pricing', href: '/wholesale' },
     { name: 'Bulk Orders', href: '/bulk-orders' },
     { name: 'Trade Accounts', href: '/trade' },
-    { name: 'Shipping Info', href: '/shipping' },
+    { name: 'Business Info', href: '/business' },
     { name: 'Return Policy', href: '/returns' }
   ];
 

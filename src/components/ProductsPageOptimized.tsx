@@ -572,7 +572,7 @@ export default function ProductsPageOptimized() {
                       <ul className="text-sm text-lime-700 dark:text-lime-400 space-y-1">
                         <li>• Premium quality Indian groceries</li>
                         <li>• Wholesale pricing for businesses</li>
-                        <li>• Fast nationwide shipping</li>
+                        <li>• Authentic specialty foods</li>
                         <li>• 100+ products across all categories</li>
                       </ul>
                     </div>

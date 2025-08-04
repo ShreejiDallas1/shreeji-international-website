@@ -67,7 +67,7 @@ export default function ComingSoonModal({ isOpen, onClose, feature = "Shopping" 
                   <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-2">
                     <li>• Secure online payments</li>
                     <li>• Real-time inventory tracking</li>
-                    <li>• Fast shipping options</li>
+                    <li>• Wholesale order management</li>
                     <li>• Order tracking & history</li>
                   </ul>
                 </div>
