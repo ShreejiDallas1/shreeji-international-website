@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/firebase';
-import { setDoc, doc } from 'firebase/firestore';
+import { collection, getDocs, setDoc, doc, deleteDoc } from 'firebase/firestore';
 import { squareService, transformSquareProduct } from '@/lib/square-simple';
 
 export async function POST(request: NextRequest) {
@@ -15,13 +15,25 @@ export async function POST(request: NextRequest) {
     const inventoryCounts = await squareService.getInventoryCounts();
     console.log(`📊 Found inventory for ${Object.keys(inventoryCounts).length} items`);
     
+    // Get current products from Firebase to identify deletions
+    const productsRef = collection(db, 'products');
+    const currentSnapshot = await getDocs(productsRef);
+    const currentProductIds = new Set<string>();
+    currentSnapshot.forEach((doc) => {
+      currentProductIds.add(doc.id);
+    });
+    
+    // Track Square product IDs
+    const squareProductIds = new Set<string>();
     let syncedCount = 0;
     
+    // Add/Update products from Square
     for (const item of squareItems) {
       try {
         const transformedProduct = transformSquareProduct(item, inventoryCounts);
         
         if (transformedProduct) {
+          squareProductIds.add(transformedProduct.id);
           // Save to Firebase
           await setDoc(doc(db, 'products', transformedProduct.id), transformedProduct);
           syncedCount++;
@@ -31,12 +43,27 @@ export async function POST(request: NextRequest) {
       }
     }
     
-    console.log(`✅ Manually synced ${syncedCount} products from Square`);
+    // Delete products that no longer exist in Square
+    let deletedCount = 0;
+    for (const firebaseProductId of currentProductIds) {
+      if (!squareProductIds.has(firebaseProductId)) {
+        try {
+          await deleteDoc(doc(db, 'products', firebaseProductId));
+          deletedCount++;
+          console.log(`🗑️ Deleted product ${firebaseProductId} (no longer in Square)`);
+        } catch (error) {
+          console.error(`❌ Error deleting product ${firebaseProductId}:`, error);
+        }
+      }
+    }
+    
+    console.log(`✅ Manually synced ${syncedCount} products, deleted ${deletedCount} products from Square`);
     
     return NextResponse.json({
       success: true,
-      message: `Successfully synced ${syncedCount} products from Square`,
-      syncedCount
+      message: `Successfully synced ${syncedCount} products and deleted ${deletedCount} products from Square`,
+      syncedCount,
+      deletedCount
     });
     
   } catch (error) {

@@ -71,10 +71,13 @@ export default function SyncNowPage() {
               }`}>
                 {result.message || result.error}
               </p>
-              {result.syncedCount && (
-                <p className="text-green-600 dark:text-green-400 mt-1">
-                  Synced {result.syncedCount} products
-                </p>
+              {result.syncedCount !== undefined && (
+                <div className="text-green-600 dark:text-green-400 mt-1 space-y-1">
+                  <p>✅ Synced {result.syncedCount} products</p>
+                  {result.deletedCount > 0 && (
+                    <p>🗑️ Deleted {result.deletedCount} products (removed from Square)</p>
+                  )}
+                </div>
               )}
             </div>
           )}
