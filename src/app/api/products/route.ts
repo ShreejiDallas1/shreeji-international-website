@@ -1,10 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/firebase';
-import { collection, getDocs, query, limit } from 'firebase/firestore';
+import { collection, getDocs, query, limit, setDoc, doc } from 'firebase/firestore';
+import { squareService, transformSquareProduct } from '@/lib/square-simple';
+
+// Track last sync time to avoid too frequent syncs
+let lastSyncTime = 0;
+const SYNC_INTERVAL = 2 * 60 * 1000; // 2 minutes
 
 export async function GET(request: NextRequest) {
   try {
-    console.log('🔄 Fetching products from Firebase...');
+    const now = Date.now();
+    const shouldSync = (now - lastSyncTime) > SYNC_INTERVAL;
+    
+    if (shouldSync) {
+      console.log('🔄 Syncing products from Square...');
+      await syncProductsFromSquare();
+      lastSyncTime = now;
+    } else {
+      console.log('🔄 Fetching products from Firebase (recently synced)...');
+    }
     
     const productsRef = collection(db, 'products');
     const q = query(productsRef, limit(100));
@@ -27,10 +41,8 @@ export async function GET(request: NextRequest) {
       count: products.length
     });
     
-    // Cache for 5 minutes, stale-while-revalidate for 10 minutes
-    response.headers.set('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=600');
-    
-    // Removed resource tracking to prevent Firebase interference
+    // Shorter cache for real-time updates (1 minute)
+    response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=120');
     
     return response;
     
@@ -43,5 +55,43 @@ export async function GET(request: NextRequest) {
       },
       { status: 500 }
     );
+  }
+}
+
+// Function to sync products from Square to Firebase
+async function syncProductsFromSquare() {
+  try {
+    console.log('🔄 Starting automatic Square sync...');
+    
+    // Get all products from Square Catalog
+    const squareItems = await squareService.getCatalogItems();
+    console.log(`📦 Found ${squareItems.length} items in Square Catalog`);
+    
+    // Get inventory counts for all items
+    const inventoryCounts = await squareService.getInventoryCounts();
+    console.log(`📊 Found inventory for ${Object.keys(inventoryCounts).length} items`);
+    
+    let syncedCount = 0;
+    
+    for (const item of squareItems) {
+      try {
+        const transformedProduct = transformSquareProduct(item, inventoryCounts);
+        
+        if (transformedProduct) {
+          // Save to Firebase
+          await setDoc(doc(db, 'products', transformedProduct.id), transformedProduct);
+          syncedCount++;
+        }
+      } catch (error) {
+        console.error(`❌ Error syncing product ${item.id}:`, error);
+      }
+    }
+    
+    console.log(`✅ Auto-synced ${syncedCount} products from Square`);
+    return syncedCount;
+    
+  } catch (error) {
+    console.error('❌ Error in automatic Square sync:', error);
+    return 0;
   }
 }
