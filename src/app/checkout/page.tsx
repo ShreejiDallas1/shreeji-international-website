@@ -1,80 +1,48 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import ComingSoonModal from '@/components/ComingSoonModal';
-import ComingSoonBanner from '@/components/ComingSoonBanner';
-import { motion } from 'framer-motion';
-import { FiShoppingCart, FiArrowLeft } from 'react-icons/fi';
+import React from 'react';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { FiCreditCard } from 'react-icons/fi';
 
 export default function CheckoutPage() {
-  const router = useRouter();
-  const [showModal, setShowModal] = useState(true);
-
-  useEffect(() => {
-    // Auto redirect after 3 seconds if modal is closed
-    const timer = setTimeout(() => {
-      if (!showModal) {
-        router.push('/cart');
-      }
-    }, 3000);
-
-    return () => clearTimeout(timer);
-  }, [showModal, router]);
-
-  const handleModalClose = () => {
-    setShowModal(false);
-    router.push('/cart');
-  };
-
   return (
-    <div className="min-h-screen bg-gray-900 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center px-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="max-w-md w-full text-center"
       >
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-8">
-          <div className="mx-auto w-16 h-16 bg-gradient-to-r from-lime-500 to-green-500 rounded-full flex items-center justify-center mb-6">
-            <FiShoppingCart className="w-8 h-8 text-white" />
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 border border-gray-100 dark:border-gray-700">
+          <div className="w-20 h-20 bg-lime-100 dark:bg-lime-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
+            <FiCreditCard className="h-10 w-10 text-lime-600 dark:text-lime-400" />
           </div>
 
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-            Checkout Coming Soon!
+            Checkout Unavailable
           </h1>
 
-          <p className="text-gray-600 dark:text-gray-300 mb-6">
-            We're working on bringing you a secure checkout experience. 
-            For now, please contact us directly for orders.
+          <p className="text-gray-600 dark:text-gray-300 mb-8">
+            Online checkout is currently disabled as we transition to our new wholesale platform. Please contact our sales team to place an order.
           </p>
 
-          <ComingSoonBanner className="mb-6" />
-
-          <div className="flex flex-col space-y-3">
-            <Link
-              href="/cart"
-              className="flex items-center justify-center bg-gradient-to-r from-lime-500 to-green-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-lime-600 hover:to-green-600 transition-all duration-200"
-            >
-              <FiArrowLeft className="w-4 h-4 mr-2" />
-              Back to Cart
-            </Link>
-            
+          <div className="space-y-4">
             <Link
               href="/contact"
-              className="border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 py-3 px-6 rounded-lg font-semibold hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+              className="block w-full py-3 px-4 bg-lime-600 hover:bg-lime-700 text-white font-medium rounded-lg transition-colors shadow-md"
             >
-              Contact Us for Orders
+              Contact Sales Team
+            </Link>
+
+            <Link
+              href="/products"
+              className="block w-full py-3 px-4 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium rounded-lg hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
+            >
+              Back to Products
             </Link>
           </div>
         </div>
       </motion.div>
-
-      <ComingSoonModal 
-        isOpen={showModal} 
-        onClose={handleModalClose}
-        feature="Secure Checkout"
-      />
     </div>
   );
 }

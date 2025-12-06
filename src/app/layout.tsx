@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { AppProvider } from '@/lib/context';
 import Header from '@/components/Header';
-import FooterOptimized from '@/components/FooterOptimized';
+import Footer from '@/components/Footer';
 import SyncToast from '@/components/SyncToast';
 import AutoSync from '@/components/AutoSync';
 import { Toaster } from 'react-hot-toast';
@@ -30,12 +30,12 @@ export default function RootLayout({
           <main className="flex-grow">
             {children}
           </main>
-          <FooterOptimized />
+          <Footer />
           <SyncToast />
           <AutoSync />
           <Toaster position="bottom-right" />
         </AppProvider>
-        
+
         {/* Firebase initialization script */}
         {/* Firebase config is handled in lib/firebase.ts */}
       </body>

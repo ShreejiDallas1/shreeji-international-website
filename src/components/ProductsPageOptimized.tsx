@@ -34,9 +34,9 @@ export default function ProductsPageOptimized() {
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get('category');
   const searchParam = searchParams.get('search');
-  
+
   const { addToCart, productsRefreshTrigger } = useAppContext();
-  
+
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -52,27 +52,27 @@ export default function ProductsPageOptimized() {
   const [loadMoreMode, setLoadMoreMode] = useState(false); // Toggle between pagination and load more
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState(searchQuery);
   const searchTimeoutRef = useRef<NodeJS.Timeout>();
-  
+
   // Debounced search for better performance with large datasets
   useEffect(() => {
     if (searchTimeoutRef.current) {
       clearTimeout(searchTimeoutRef.current);
     }
-    
+
     searchTimeoutRef.current = setTimeout(() => {
       setDebouncedSearchQuery(searchQuery);
     }, 300); // 300ms delay
-    
+
     return () => {
       if (searchTimeoutRef.current) {
         clearTimeout(searchTimeoutRef.current);
       }
     };
   }, [searchQuery]);
-  
+
   // Categories state
-  const [categories, setCategories] = useState<{id: string, name: string, slug: string, count: number}[]>([]);
-  
+  const [categories, setCategories] = useState<{ id: string, name: string, slug: string, count: number }[]>([]);
+
   // Memoized categories with performance optimization
   const memoizedCategories = useMemo(() => {
     const categoryMap = new Map();
@@ -84,7 +84,7 @@ export default function ProductsPageOptimized() {
         categoryMap.set(category, 1);
       }
     });
-    
+
     return Array.from(categoryMap.entries()).map(([name, count]) => ({
       id: name.toLowerCase().replace(/\s+/g, '-'),
       name,
@@ -99,16 +99,16 @@ export default function ProductsPageOptimized() {
       setLoading(true);
       console.log('🔄 Fetching products...', { categoryParam, searchParam });
       const productsCollection = collection(db, 'products');
-      
+
       // Use simple query to avoid index issues
       const productsQuery = query(
         productsCollection,
         limit(100) // Limit initial load
       );
-      
+
       const querySnapshot = await getDocs(productsQuery);
       const productsData: Product[] = [];
-      
+
       querySnapshot.forEach((doc) => {
         try {
           const data = doc.data();
@@ -131,14 +131,14 @@ export default function ProductsPageOptimized() {
           console.error('Error processing product document:', docError);
         }
       });
-      
+
       setProducts(productsData);
       console.log(`✅ Loaded ${productsData.length} products`);
-      
+
       // Debug: Show all categories in products
       const allCategories = [...new Set(productsData.map(p => p.category))];
       console.log('📊 All categories in products:', allCategories);
-      
+
       // Set dynamic price range based on actual product prices (already in USD)
       if (productsData.length > 0) {
         const prices = productsData.map(p => p.price).filter(p => p > 0);
@@ -150,7 +150,7 @@ export default function ProductsPageOptimized() {
           setPriceRange([minPrice, calculatedMax]);
         }
       }
-      
+
     } catch (error) {
       console.error('Error fetching products:', error);
       setProducts([]);
@@ -180,40 +180,40 @@ export default function ProductsPageOptimized() {
   // Optimized filtering with debouncing and memoization
   const filteredAndSortedProducts = useMemo(() => {
     let result = [...products];
-    
+
     // Filter by search query (using debounced search for better performance)
     if (debouncedSearchQuery) {
       const query = debouncedSearchQuery.toLowerCase();
-      result = result.filter(product => 
+      result = result.filter(product =>
         product.name.toLowerCase().includes(query) ||
         product.description.toLowerCase().includes(query) ||
         product.category.toLowerCase().includes(query) ||
         product.brand?.toLowerCase().includes(query)
       );
     }
-    
+
     // Filter by category
     if (selectedCategory) {
       result = result.filter(product => {
         const productCategory = product.category.toLowerCase().trim();
         const selectedCategoryLower = selectedCategory.toLowerCase().replace(/-/g, ' ').trim();
-        
+
         // Try multiple matching strategies
         return productCategory === selectedCategoryLower ||
-               productCategory.includes(selectedCategoryLower) ||
-               selectedCategoryLower.includes(productCategory) ||
-               product.category.toLowerCase().trim() === selectedCategory.toLowerCase().trim();
+          productCategory.includes(selectedCategoryLower) ||
+          selectedCategoryLower.includes(productCategory) ||
+          product.category.toLowerCase().trim() === selectedCategory.toLowerCase().trim();
       });
-      
+
       console.log(`🔍 Filtering by category: "${selectedCategory}" found ${result.length} products`);
       console.log('🔍 First few products after filtering:', result.slice(0, 3).map(p => ({ name: p.name, category: p.category })));
     }
-    
+
     // Filter by price range (prices are already in USD)
-    result = result.filter(product => 
+    result = result.filter(product =>
       product.price >= priceRange[0] && product.price <= priceRange[1]
     );
-    
+
     // Sort products
     switch (sortBy) {
       case 'name-asc':
@@ -238,7 +238,7 @@ export default function ProductsPageOptimized() {
       default:
         break;
     }
-    
+
     return result;
   }, [products, debouncedSearchQuery, selectedCategory, priceRange, sortBy]);
 
@@ -299,18 +299,18 @@ export default function ProductsPageOptimized() {
                 )}
               </div>
             </div>
-            
+
             {/* View Toggle */}
             <div className="flex items-center gap-4 mt-4 lg:mt-0">
               <div className="flex border rounded-lg overflow-hidden bg-white dark:bg-gray-800">
-                <button 
+                <button
                   className={`p-3 ${viewMode === 'grid' ? 'bg-lime-500 text-white' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'}`}
                   onClick={() => setViewMode('grid')}
                   aria-label="Grid view"
                 >
                   <FiGrid />
                 </button>
-                <button 
+                <button
                   className={`p-3 ${viewMode === 'list' ? 'bg-lime-500 text-white' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'}`}
                   onClick={() => setViewMode('list')}
                   aria-label="List view"
@@ -318,9 +318,9 @@ export default function ProductsPageOptimized() {
                   <FiList />
                 </button>
               </div>
-              
-              <Button 
-                variant="outline" 
+
+              <Button
+                variant="outline"
                 onClick={() => setShowFilters(!showFilters)}
                 rightIcon={<FiFilter />}
                 className="whitespace-nowrap"
@@ -329,27 +329,27 @@ export default function ProductsPageOptimized() {
               </Button>
             </div>
           </div>
-          
+
           {/* Search Bar */}
-          <SearchBar 
-            placeholder="Search products..." 
+          <SearchBar
+            placeholder="Search products..."
             value={searchQuery}
             onChange={setSearchQuery}
             className="max-w-2xl"
           />
         </motion.div>
-        
+
         {/* Filters Panel */}
         <AnimatePresence>
           {showFilters && (
             <motion.div
-              className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 mb-8"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
+              className="overflow-hidden"
+              initial={{ opacity: 0, height: 0, marginBottom: 0 }}
+              animate={{ opacity: 1, height: 'auto', marginBottom: 32 }}
+              exit={{ opacity: 0, height: 0, marginBottom: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
             >
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Categories Filter */}
                 <div>
                   <h3 className="font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
@@ -358,9 +358,9 @@ export default function ProductsPageOptimized() {
                   </h3>
                   <div className="space-y-3 max-h-48 overflow-y-auto">
                     <label className="flex items-center cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 p-2 rounded-md transition-colors">
-                      <input 
-                        type="radio" 
-                        name="category" 
+                      <input
+                        type="radio"
+                        name="category"
                         checked={selectedCategory === ''}
                         onChange={() => setSelectedCategory('')}
                         className="w-4 h-4 text-lime-600 bg-gray-100 border-gray-300 focus:ring-lime-500"
@@ -371,9 +371,9 @@ export default function ProductsPageOptimized() {
                     </label>
                     {memoizedCategories.map(category => (
                       <label key={category.id} className="flex items-center cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 p-2 rounded-md transition-colors">
-                        <input 
-                          type="radio" 
-                          name="category" 
+                        <input
+                          type="radio"
+                          name="category"
                           checked={selectedCategory === category.slug}
                           onChange={() => setSelectedCategory(category.slug)}
                           className="w-4 h-4 text-lime-600 bg-gray-100 border-gray-300 focus:ring-lime-500"
@@ -385,7 +385,7 @@ export default function ProductsPageOptimized() {
                     ))}
                   </div>
                 </div>
-                
+
                 {/* Price Range Filter */}
                 <div>
                   <h3 className="font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
@@ -415,7 +415,7 @@ export default function ProductsPageOptimized() {
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Sort Options */}
                 <div>
                   <h3 className="font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
@@ -441,7 +441,7 @@ export default function ProductsPageOptimized() {
             </motion.div>
           )}
         </AnimatePresence>
-        
+
         {/* Products Grid/List */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -451,7 +451,7 @@ export default function ProductsPageOptimized() {
           {paginatedProducts.length > 0 ? (
             <>
               <div className={
-                viewMode === 'grid' 
+                viewMode === 'grid'
                   ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6'
                   : 'space-y-4'
               }>
@@ -463,21 +463,20 @@ export default function ProductsPageOptimized() {
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.9 }}
-                      transition={{ 
+                      transition={{
                         duration: 0.2,
                         delay: Math.min(index * 0.02, 0.5) // Cap delay for large datasets
                       }}
                     >
-                      <ProductCard 
+                      <ProductCard
                         product={product}
-                        onAddToCart={() => handleAddToCart(product)}
                         viewMode={viewMode}
                       />
                     </motion.div>
                   ))}
                 </AnimatePresence>
               </div>
-              
+
               {/* Pagination */}
               {totalPages > 1 && (
                 <motion.div
@@ -493,12 +492,12 @@ export default function ProductsPageOptimized() {
                   >
                     Previous
                   </Button>
-                  
+
                   {/* Smart pagination for large datasets */}
                   {(() => {
                     const maxVisiblePages = 7;
                     const pages = [];
-                    
+
                     if (totalPages <= maxVisiblePages) {
                       // Show all pages if total is small
                       for (let i = 1; i <= totalPages; i++) {
@@ -517,7 +516,7 @@ export default function ProductsPageOptimized() {
                         pages.push(1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages);
                       }
                     }
-                    
+
                     return pages.map((page, index) => (
                       page === '...' ? (
                         <span key={`ellipsis-${index}`} className="px-3 py-2 text-gray-500">...</span>
@@ -525,18 +524,17 @@ export default function ProductsPageOptimized() {
                         <button
                           key={page}
                           onClick={() => setCurrentPage(page as number)}
-                          className={`px-3 py-2 rounded-md transition-colors ${
-                            currentPage === page
-                              ? 'bg-lime-500 text-white'
-                              : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
-                          }`}
+                          className={`px-3 py-2 rounded-md transition-colors ${currentPage === page
+                            ? 'bg-lime-500 text-white'
+                            : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                            }`}
                         >
                           {page}
                         </button>
                       )
                     ));
                   })()}
-                  
+
                   <Button
                     variant="outline"
                     onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
@@ -562,7 +560,7 @@ export default function ProductsPageOptimized() {
                       Products Coming Soon!
                     </h3>
                     <p className="text-lg text-gray-600 dark:text-gray-400 mb-8">
-                      We're working hard to bring you the best wholesale Indian grocery products. 
+                      We're working hard to bring you the best wholesale Indian grocery products.
                       Our catalog will be available very soon!
                     </p>
                     <div className="bg-gradient-to-r from-lime-50 to-green-50 dark:from-lime-900/20 dark:to-green-900/20 p-6 rounded-xl border border-lime-200 dark:border-lime-800">

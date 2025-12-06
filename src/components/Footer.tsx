@@ -13,22 +13,22 @@ const Footer = () => {
           {/* Company Info */}
           <div>
             <Link href="/" className="inline-block mb-4">
-              <Image 
-                src="/images/ShreejiLogo.png" 
-                alt="Shreeji International" 
-                width={180} 
+              <Image
+                src="/images/ShreejiLogo.png"
+                alt="Shreeji International"
+                width={180}
                 height={60}
                 className="h-14 w-auto"
               />
             </Link>
             <p className="text-gray-600 dark:text-gray-400 mb-4">
-              Your trusted partner for premium Indian wholesale groceries, 
+              Your trusted partner for premium Indian wholesale groceries,
               delivering quality products for businesses and bulk buyers.
             </p>
             <div className="flex space-x-4">
-              <SocialLink href="https://facebook.com" icon={<FiFacebook />} label="Facebook" />
-              <SocialLink href="https://instagram.com" icon={<FiInstagram />} label="Instagram" />
-              <SocialLink href="https://twitter.com" icon={<FiTwitter />} label="Twitter" />
+              <SocialLink href="#" icon={<FiFacebook />} label="Facebook" />
+              <SocialLink href="#" icon={<FiInstagram />} label="Instagram" />
+              <SocialLink href="#" icon={<FiTwitter />} label="Twitter" />
             </div>
           </div>
 
@@ -36,7 +36,7 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">Business</h3>
             <ul className="space-y-2">
-              <FooterLink href="/auth/register" label="Create Account" />
+              <FooterLink href="/auth/register" label="Create Wholesale Account" />
               <FooterLink href="/products" label="Browse Products" />
               <FooterLink href="/contact" label="Contact Us" />
               <FooterLink href="/about" label="About Us" />
@@ -94,8 +94,8 @@ const Footer = () => {
 const FooterLink = ({ href, label }: { href: string; label: string }) => {
   return (
     <li>
-      <Link 
-        href={href} 
+      <Link
+        href={href}
         className="text-gray-600 dark:text-gray-400 hover:text-lime-500 dark:hover:text-lime-400 transition-colors"
       >
         {label}
@@ -105,19 +105,19 @@ const FooterLink = ({ href, label }: { href: string; label: string }) => {
 };
 
 // Social Link Component
-const SocialLink = ({ 
-  href, 
-  icon, 
-  label 
-}: { 
-  href: string; 
+const SocialLink = ({
+  href,
+  icon,
+  label
+}: {
+  href: string;
   icon: React.ReactNode;
   label: string;
 }) => {
   return (
-    <a 
-      href={href} 
-      target="_blank" 
+    <a
+      href={href}
+      target="_blank"
       rel="noopener noreferrer"
       className="h-10 w-10 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-lime-500 dark:hover:bg-lime-600 hover:text-white dark:hover:text-white hover:border-lime-500 dark:hover:border-lime-600 transition-all transform hover:-translate-y-1"
       aria-label={label}

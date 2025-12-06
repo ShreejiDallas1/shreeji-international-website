@@ -64,7 +64,7 @@ export default function HomePage() {
       try {
         setLoading(true);
         const productsCollection = collection(db, 'products');
-        
+
         // Fetch featured products
         const featuredQuery = query(
           productsCollection,
@@ -72,7 +72,7 @@ export default function HomePage() {
           limit(6)
         );
         const featuredSnapshot = await getDocs(featuredQuery);
-        
+
         // Process featured products
         const featuredData: Product[] = [];
         featuredSnapshot.forEach((doc) => {
@@ -93,9 +93,9 @@ export default function HomePage() {
             createdAt: data.createdAt ? new Date(data.createdAt.seconds * 1000) : new Date()
           });
         });
-        
+
         setFeaturedProducts(featuredData);
-        
+
       } catch (error) {
         console.error('Error fetching products:', error);
       } finally {
@@ -113,7 +113,7 @@ export default function HomePage() {
   const fetchSquareCategories = async () => {
     try {
       console.log('📂 Fetching categories from Square...');
-      
+
       const response = await fetch('/api/square/categories', {
         cache: 'no-store',
         headers: {
@@ -121,7 +121,7 @@ export default function HomePage() {
         }
       });
       const data = await response.json();
-      
+
       if (data.success && data.categories) {
         console.log('✅ Loaded categories from Square:', data.categories);
         setCategories(data.categories);
@@ -136,7 +136,7 @@ export default function HomePage() {
           description: 'Browse all available products'
         }]);
       }
-      
+
     } catch (error) {
       console.error('❌ Error fetching Square categories:', error);
       // Fallback to a simple default category
@@ -205,8 +205,8 @@ export default function HomePage() {
       >
         <div className="absolute inset-0 bg-black/20"></div>
         <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width=%2260%22%20height=%2260%22%20viewBox=%220%200%2060%2060%22%20xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg%20fill=%22none%22%20fill-rule=%22evenodd%22%3E%3Cg%20fill=%22%239C92AC%22%20fill-opacity=%220.05%22%3E%3Ccircle%20cx=%2230%22%20cy=%2230%22%20r=%224%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
-        
-        <div className="relative container mx-auto px-4 py-28 lg:py-40">
+
+        <div className="relative container mx-auto px-4 pt-32 pb-28 lg:pt-48 lg:pb-56">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div
               className="space-y-10"
@@ -226,20 +226,20 @@ export default function HomePage() {
                     Premium Indian Groceries
                   </span>
                 </motion.h1>
-                
+
                 <motion.p
                   className="text-xl lg:text-2xl text-lime-100 leading-relaxed max-w-lg"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 }}
                 >
-                  Wholesale authentic Indian groceries and specialty foods. 
+                  Wholesale authentic Indian groceries and specialty foods.
                   <span className="block mt-2 text-lg text-lime-200">
                     US Only • Premium Quality • Wholesale Pricing
                   </span>
                 </motion.p>
               </div>
-              
+
               <motion.div
                 className="flex flex-col sm:flex-row gap-6 mt-8"
                 initial={{ opacity: 0, y: 20 }}
@@ -253,10 +253,10 @@ export default function HomePage() {
                   Shop Now
                   <FiArrowRight className="ml-3 group-hover:translate-x-1 transition-transform" />
                 </Link>
-                
+
               </motion.div>
             </motion.div>
-            
+
             <motion.div
               className="relative"
               initial={{ opacity: 0, x: 50 }}
@@ -264,8 +264,8 @@ export default function HomePage() {
               transition={{ duration: 0.8, delay: 0.3 }}
             >
               <div className="relative z-10 bg-white/10 backdrop-blur-sm rounded-3xl p-10 border border-white/20">
-                <SearchBar 
-                  placeholder="Search for spices, grains, oils..." 
+                <SearchBar
+                  placeholder="Search for spices, grains, oils..."
                   className="mb-6"
                   showTypingAnimation={true}
                 />
@@ -307,7 +307,7 @@ export default function HomePage() {
               Explore our wide range of authentic Indian grocery categories
             </p>
           </motion.div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {categories.length === 0 ? (
               // Categories coming soon placeholder
@@ -322,27 +322,27 @@ export default function HomePage() {
               </div>
             ) : (
               categories.map((category, index) => (
-              <motion.div
-                key={category.name}
-                className="group"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <Link
-                  href={`/products?category=${category.name.toLowerCase().replace(/\s+/g, '-')}`}
-                  className={`block p-8 rounded-2xl bg-gradient-to-br ${category.color} text-white transform transition-all duration-300 hover:scale-105 hover:shadow-2xl`}
+                <motion.div
+                  key={category.name}
+                  className="group"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
                 >
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-4xl">{category.emoji}</span>
-                    <span className="text-sm font-medium bg-white/20 px-3 py-1 rounded-full">
-                      {category.productCount}+
-                    </span>
-                  </div>
-                  <h3 className="text-xl font-bold">{category.name}</h3>
-                </Link>
-              </motion.div>
+                  <Link
+                    href={`/products?category=${category.name.toLowerCase().replace(/\s+/g, '-')}`}
+                    className={`block p-8 rounded-2xl bg-gradient-to-br ${category.color} text-white transform transition-all duration-300 hover:scale-105 hover:shadow-2xl`}
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="text-4xl">{category.emoji}</span>
+                      <span className="text-sm font-medium bg-white/20 px-3 py-1 rounded-full">
+                        {category.productCount}+
+                      </span>
+                    </div>
+                    <h3 className="text-xl font-bold">{category.name}</h3>
+                  </Link>
+                </motion.div>
               ))
             )}
           </div>
@@ -369,7 +369,7 @@ export default function HomePage() {
                 Our handpicked selection of premium products
               </p>
             </motion.div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {featuredProducts.map((product, index) => (
                 <motion.div
@@ -383,7 +383,7 @@ export default function HomePage() {
                 </motion.div>
               ))}
             </div>
-            
+
             <motion.div
               className="text-center mt-12"
               initial={{ opacity: 0 }}
@@ -423,7 +423,7 @@ export default function HomePage() {
               Your trusted partner for authentic Indian groceries
             </p>
           </motion.div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
               <motion.div

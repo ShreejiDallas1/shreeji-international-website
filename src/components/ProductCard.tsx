@@ -1,31 +1,44 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import ProductImage from './ProductImage';
 import Image from 'next/image';
 import { FiEye } from 'react-icons/fi';
 import { useAppContext } from '@/lib/context';
-import { Product } from '@/hooks/useProducts';
 import { motion } from 'framer-motion';
 import { formatCurrency } from '@/lib/utils';
 
+// Define Product interface locally if not exported from hooks
+interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  category: string;
+  imageUrl?: string;
+  image?: string;
+  stock: number;
+  unit?: string;
+  featured?: boolean;
+  brand?: string;
+  minOrderQuantity?: number;
+}
+
 interface ProductCardProps {
   product: Product;
-  onAddToCart?: () => void;
   viewMode?: 'grid' | 'list';
 }
 
-const ProductCard: React.FC<ProductCardProps> = React.memo(({ product, onAddToCart, viewMode = 'grid' }) => {
+const ProductCard: React.FC<ProductCardProps> = React.memo(({ product, viewMode = 'grid' }) => {
   const { user } = useAppContext();
-  
+
   // Get image URL
   const imageUrl = product.image || product.imageUrl || '';
 
   // Different layouts for grid vs list view
   if (viewMode === 'list') {
     return (
-      <motion.div 
+      <motion.div
         className="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700 group min-h-[160px]"
         whileHover={{ y: -2 }}
         transition={{ duration: 0.3 }}
@@ -43,14 +56,23 @@ const ProductCard: React.FC<ProductCardProps> = React.memo(({ product, onAddToCa
                   loading="lazy"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                   unoptimized
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = '/images/placeholder.png';
+                  }}
                 />
               ) : (
                 <div className="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                  <span className="text-gray-400">No Image</span>
+                  <Image
+                    src="/images/placeholder.png"
+                    alt="No Image"
+                    fill
+                    className="object-cover opacity-50"
+                  />
                 </div>
               )}
             </Link>
-            
+
             {/* Stock Status for list view */}
             {(product.stock === 0 || product.stock < 0) && (
               <div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center">
@@ -60,7 +82,7 @@ const ProductCard: React.FC<ProductCardProps> = React.memo(({ product, onAddToCa
               </div>
             )}
           </div>
-          
+
           {/* Content Section */}
           <div className="flex-1 p-6">
             <div className="flex justify-between items-start h-full">
@@ -75,19 +97,19 @@ const ProductCard: React.FC<ProductCardProps> = React.memo(({ product, onAddToCa
                     </span>
                   )}
                 </div>
-                
+
                 <Link href={`/products/${product.id}`} className="block">
                   <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2 group-hover:text-lime-600 dark:group-hover:text-lime-400 transition-colors line-clamp-2">
                     {product.name}
                   </h3>
                 </Link>
-                
+
                 {product.brand && (
                   <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">
                     {product.brand}
                   </p>
                 )}
-                
+
                 <div className="flex items-center justify-between mt-auto">
                   <div>
                     {user ? (
@@ -100,7 +122,7 @@ const ProductCard: React.FC<ProductCardProps> = React.memo(({ product, onAddToCa
                       </Link>
                     )}
                   </div>
-                  
+
                   <div className="text-right">
                     <span className="text-xs text-gray-500 dark:text-gray-400 block">
                       Min: {product.minOrderQuantity || 5} {product.unit || 'units'}
@@ -126,7 +148,7 @@ const ProductCard: React.FC<ProductCardProps> = React.memo(({ product, onAddToCa
 
   // Grid view (default)
   return (
-    <motion.div 
+    <motion.div
       className="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700 group"
       whileHover={{ y: -5 }}
       transition={{ duration: 0.3 }}
@@ -142,14 +164,23 @@ const ProductCard: React.FC<ProductCardProps> = React.memo(({ product, onAddToCa
               loading="lazy"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
               unoptimized
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.src = '/images/placeholder.png';
+              }}
             />
           ) : (
             <div className="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-              <span className="text-gray-400">No Image</span>
+              <Image
+                src="/images/placeholder.png"
+                alt="No Image"
+                fill
+                className="object-cover opacity-50"
+              />
             </div>
           )}
         </Link>
-        
+
         {/* Overlay with quick actions */}
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
           <div className="flex gap-2">
@@ -162,14 +193,14 @@ const ProductCard: React.FC<ProductCardProps> = React.memo(({ product, onAddToCa
             </button>
           </div>
         </div>
-        
+
         {/* Category Badge */}
         <div className="absolute top-3 left-3">
           <span className="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full">
             {product.category}
           </span>
         </div>
-        
+
         {/* Stock Status */}
         {(product.stock === 0 || product.stock < 0) && (
           <div className="absolute top-0 right-0 bottom-0 left-0 bg-black bg-opacity-60 flex items-center justify-center z-20">
@@ -178,7 +209,7 @@ const ProductCard: React.FC<ProductCardProps> = React.memo(({ product, onAddToCa
             </span>
           </div>
         )}
-        
+
         {/* Featured Badge */}
         {product.featured && (
           <div className="absolute top-3 right-3">
@@ -188,7 +219,7 @@ const ProductCard: React.FC<ProductCardProps> = React.memo(({ product, onAddToCa
           </div>
         )}
       </div>
-      
+
       <div className="p-5">
         <div className="flex items-center mb-2">
           <span className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">Wholesale</span>
@@ -202,19 +233,19 @@ const ProductCard: React.FC<ProductCardProps> = React.memo(({ product, onAddToCa
             </span>
           )}
         </div>
-        
+
         <Link href={`/products/${product.id}`} className="block">
           <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2 group-hover:text-lime-600 dark:group-hover:text-lime-400 transition-colors">
             {product.name}
           </h3>
         </Link>
-        
+
         {product.brand && (
           <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
             {product.brand}
           </p>
         )}
-        
+
         <div className="flex justify-between items-center mt-3">
           <div>
             {user ? (
@@ -227,7 +258,7 @@ const ProductCard: React.FC<ProductCardProps> = React.memo(({ product, onAddToCa
               </Link>
             )}
           </div>
-          
+
           <span className="text-xs text-gray-500 dark:text-gray-400">
             Min. Order: {product.minOrderQuantity || 5} {product.unit || 'units'}
           </span>

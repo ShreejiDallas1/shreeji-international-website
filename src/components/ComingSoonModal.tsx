@@ -28,7 +28,7 @@ export default function ComingSoonModal({ isOpen, onClose, feature = "Shopping" 
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-sm w-full p-6 relative mx-4"
+              className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-[90%] sm:w-full max-w-md md:max-w-lg p-6 relative mx-4"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close Button */}
@@ -54,7 +54,7 @@ export default function ComingSoonModal({ isOpen, onClose, feature = "Shopping" 
 
                 {/* Description */}
                 <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-                  We're working hard to bring you an amazing online shopping experience. 
+                  We're working hard to bring you an amazing online shopping experience.
                   For now, you can browse our products and get familiar with our offerings.
                 </p>
 

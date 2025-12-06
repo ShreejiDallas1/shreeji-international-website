@@ -1,0 +1,625 @@
+
+> shreeji-international@0.1.0 lint
+> next lint
+
+
+./src/app/account/orders/page.tsx
+27:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+55:6  Warning: React Hook useEffect has a missing dependency: 'fetchOrders'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+94:30  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+156:40  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+213:25  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/app/account/orders/[id]/page.tsx
+28:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+55:6  Warning: React Hook useEffect has a missing dependency: 'fetchOrder'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+93:30  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+212:19  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/app/account/page.tsx
+14:42  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+43:6  Warning: React Hook useEffect has a missing dependency: 'fetchProfile'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+55:6  Warning: React Hook useEffect has a missing dependency: 'fetchProfile'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+219:27  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./src/app/account/profile/page.tsx
+8:10  Error: 'FiUser' is defined but never used.  @typescript-eslint/no-unused-vars
+38:45  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/admin/cleanup/page.tsx
+8:52  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/admin/generate-categories/page.tsx
+11:40  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+157:55  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/admin/orders/page.tsx
+16:10  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+23:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+89:46  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+116:30  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+140:50  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+236:29  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/app/admin/page.tsx
+7:36  Error: 'FiUsers' is defined but never used.  @typescript-eslint/no-unused-vars
+7:45  Error: 'FiSettings' is defined but never used.  @typescript-eslint/no-unused-vars
+122:66  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+292:27  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+292:42  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+292:46  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+292:52  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+293:27  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+293:39  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+294:46  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+294:60  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+301:27  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+301:41  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+309:58  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+311:27  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+311:45  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+313:41  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+313:55  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+
+./src/app/admin/resource-monitor/page.tsx
+4:10  Error: 'ResourceMonitor' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/admin/square/page.tsx
+12:48  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+13:44  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+14:48  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+15:40  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+178:68  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/admin/sync/page.tsx
+12:48  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+13:60  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+14:60  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+34:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+70:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+120:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+273:59  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+281:19  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./src/app/admin/sync-now/page.tsx
+7:40  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+23:14  Error: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/admin/users/page.tsx
+178:49  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./src/app/api/admin/cleanup/route.ts
+5:30  Error: 'request' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/admin/clear-orders/route.ts
+5:30  Error: 'request' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/ai/route.ts
+69:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/api/auth/login/route.ts
+20:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/api/auth/register/route.ts
+20:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/api/auth/reset-password/route.ts
+20:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/api/auth/verify-reset-code/route.ts
+20:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/api/check-cooldown/route.ts
+24:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/api/cleanup-orders/route.ts
+57:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/api/clear-all-products/route.ts
+5:28  Error: 'request' is defined but never used.  @typescript-eslint/no-unused-vars
+38:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/api/clear-categories/route.ts
+2:31  Error: 'doc' is defined but never used.  @typescript-eslint/no-unused-vars
+5:28  Error: 'request' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/create-sample-products/route.ts
+86:28  Error: 'request' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/debug-categories/route.ts
+11:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+31:25  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+49:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/api/debug-firestore/route.ts
+14:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/api/debug-products/route.ts
+10:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+35:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/api/fix-products/route.ts
+5:28  Error: 'request' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/force-send-email/route.ts
+37:23  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+55:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/api/generate-categories/route.ts
+3:31  Error: 'doc' is defined but never used.  @typescript-eslint/no-unused-vars
+3:36  Error: 'setDoc' is defined but never used.  @typescript-eslint/no-unused-vars
+8:28  Error: 'request' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/orders/route.ts
+3:54  Error: 'doc' is defined but never used.  @typescript-eslint/no-unused-vars
+3:59  Error: 'getDoc' is defined but never used.  @typescript-eslint/no-unused-vars
+3:67  Error: 'updateDoc' is defined but never used.  @typescript-eslint/no-unused-vars
+59:38  Error: 'total' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/orders/secure/route.ts
+3:67  Error: 'updateDoc' is defined but never used.  @typescript-eslint/no-unused-vars
+3:78  Error: 'addDoc' is defined but never used.  @typescript-eslint/no-unused-vars
+14:34  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+23:43  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+37:34  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+40:35  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+242:71  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+267:47  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/api/payments/process/route.ts
+12:44  Error: 'currency' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+119:28  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/api/payments/square/route.ts
+74:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/api/payments/status/[paymentId]/route.ts
+50:46  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+64:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/api/products/route.ts
+10:27  Error: 'request' is defined but never used.  @typescript-eslint/no-unused-vars
+27:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/api/send-verification-code/route.ts
+29:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/api/shipping/calculate/route.ts
+36:11  Error: 'shippingAddress' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+44:52  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/api/square/categories/route.ts
+4:27  Error: 'request' is defined but never used.  @typescript-eslint/no-unused-vars
+18:38  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/api/square/create-sample-products/route.ts
+35:28  Error: 'request' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/square/get-locations/route.ts
+3:27  Error: 'request' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/square/inventory/route.ts
+38:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+103:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/api/square/locations/route.ts
+12:59  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+31:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/api/square/process-payment/route.ts
+56:38  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/api/square/sync-products/route.ts
+7:7  Error: 'lastSyncTime' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/sync-now/route.ts
+6:28  Error: 'request' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/test/firebase/route.ts
+3:45  Error: 'addDoc' is defined but never used.  @typescript-eslint/no-unused-vars
+38:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/api/test-email/route.ts
+37:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/api/test-email-direct/route.ts
+37:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/api/test-square/route.ts
+4:27  Error: 'request' is defined but never used.  @typescript-eslint/no-unused-vars
+55:60  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/api/test-square-sync/route.ts
+5:27  Error: 'request' is defined but never used.  @typescript-eslint/no-unused-vars
+62:39  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/auth/complete-profile/page.tsx
+54:6  Warning: React Hook useEffect has a missing dependency: 'formData'. Either include it or remove the dependency array. You can also do a functional update 'setFormData(f => ...)' if you only need 'formData' in the 'setFormData' call.  react-hooks/exhaustive-deps
+83:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/auth/forgot-password/page.tsx
+25:9  Error: 'router' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+205:21  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+209:22  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+307:29  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./src/app/auth/login/page.tsx
+28:9  Error: 'redirectUrl' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/auth/register/page.tsx
+14:10  Error: 'doc' is defined but never used.  @typescript-eslint/no-unused-vars
+14:15  Error: 'setDoc' is defined but never used.  @typescript-eslint/no-unused-vars
+15:10  Error: 'db' is defined but never used.  @typescript-eslint/no-unused-vars
+100:53  Error: 'user' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+131:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+145:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/auth/verify-reset-code/page.tsx
+330:17  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./src/app/cart/page.tsx
+6:86  Error: 'FiPercent' is defined but never used.  @typescript-eslint/no-unused-vars
+15:9  Error: 'router' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/checkout/confirmation/page.tsx
+323:77  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+323:87  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+
+./src/app/checkout/enhanced-page.tsx
+41:54  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+56:21  Error: 'handleSubmit' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+66:51  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+124:53  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+137:32  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+185:44  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+199:9  Error: 'freeShippingEligible' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+384:38  Error: 'method' is defined but never used.  @typescript-eslint/no-unused-vars
+429:48  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./src/app/checkout/page-backup.tsx
+8:57  Error: 'FiDollarSign' is defined but never used.  @typescript-eslint/no-unused-vars
+56:54  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+62:51  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+148:60  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+208:44  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+213:27  Error: 'data' is defined but never used.  @typescript-eslint/no-unused-vars
+452:23  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+503:81  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/checkout/page-original.tsx
+11:8  Error: 'ComingSoonModal' is defined but never used.  @typescript-eslint/no-unused-vars
+12:8  Error: 'ComingSoonBanner' is defined but never used.  @typescript-eslint/no-unused-vars
+58:54  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+64:51  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+150:60  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+167:32  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+210:44  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+215:27  Error: 'data' is defined but never used.  @typescript-eslint/no-unused-vars
+454:23  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+505:81  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+635:34  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/checkout/page.tsx
+48:15  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./src/app/cleanup-orders/page.tsx
+7:40  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+18:14  Error: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+45:14  Error: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+122:46  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./src/app/contact/page-backup.tsx
+52:14  Error: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+70:64  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./src/app/contact/page-old.tsx
+52:14  Error: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+70:64  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./src/app/contact/page-temp.tsx
+52:14  Error: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+70:64  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./src/app/contact/page.tsx
+53:14  Error: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+76:31  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+91:66  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./src/app/dashboard/page.tsx
+3:10  Error: 'useState' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/debug-images/page.tsx
+50:24  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/debug-user/page.tsx
+45:17  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+45:65  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+45:74  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+
+./src/app/fix-images/page.tsx
+44:22  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+44:28  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+45:37  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+45:67  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+48:21  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+48:32  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+56:17  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+56:47  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+
+./src/app/layout.tsx
+10:8  Error: 'Script' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/products/[id]/page.tsx
+8:10  Error: 'useAppContext' is defined but never used.  @typescript-eslint/no-unused-vars
+12:31  Error: 'FiStar' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/test/currency-conversion/page.tsx
+12:9  Error: 'usdAmount' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+138:25  Error: Do not use an `<a>` element to navigate to `/products/`. Use `<Link />` from `next/link` instead. See: https://nextjs.org/docs/messages/no-html-link-for-pages  @next/next/no-html-link-for-pages
+
+./src/app/test/email/page.tsx
+117:14  Error: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/test/firebase/page.tsx
+5:22  Error: 'addDoc' is defined but never used.  @typescript-eslint/no-unused-vars
+9:48  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+25:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+47:24  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+61:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+96:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/test/firebase-email/page.tsx
+45:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+81:28  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+149:60  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./src/app/test/login-test/page.tsx
+50:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+203:27  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+203:53  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+
+./src/app/test/password-reset/page.tsx
+4:10  Error: 'sendPasswordResetEmail' is defined but never used.  @typescript-eslint/no-unused-vars
+5:10  Error: 'auth' is defined but never used.  @typescript-eslint/no-unused-vars
+44:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+75:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+111:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/test/security/page.tsx
+32:14  Error: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+48:14  Error: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+71:14  Error: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+88:14  Error: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+104:14  Error: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+136:14  Error: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/test/sheets/page.tsx
+6:48  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+20:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/test/sync/page.tsx
+6:48  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+36:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/test/verification-code/page.tsx
+88:14  Error: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+128:14  Error: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/test-images/page.tsx
+9:44  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+76:19  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/app/test-images-debug/page.tsx
+121:19  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/app/test-thumbnail/page.tsx
+60:15  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/components/admin/SquareIntegration.tsx
+29:46  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/components/AutoSync.tsx
+9:10  Error: 'isAutoSyncing' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+9:25  Error: 'setIsAutoSyncing' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+10:10  Error: 'lastAutoSync' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+10:24  Error: 'setLastAutoSync' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+11:22  Error: 'setSyncStatus' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+12:29  Error: 'adminLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+13:11  Error: 'user' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+13:17  Error: 'triggerProductsRefresh' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+22:9  Error: 'getStatusIcon' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+35:9  Error: 'getStatusText' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/checkout/OrderSummary.tsx
+6:10  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+38:19  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/components/ComingSoonModal.tsx
+57:21  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+65:25  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./src/components/FirebaseTest.tsx
+3:20  Error: 'useEffect' is defined but never used.  @typescript-eslint/no-unused-vars
+8:48  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+28:24  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+42:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/components/FooterOptimized.tsx
+59:19  Error: Parsing error: Property assignment expected.
+
+./src/components/Header.tsx
+8:83  Error: 'FiHelpCircle' is defined but never used.  @typescript-eslint/no-unused-vars
+21:5  Error: 'darkMode' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+22:5  Error: 'toggleDarkMode' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/HomePage.tsx
+5:8  Error: 'Image' is defined but never used.  @typescript-eslint/no-unused-vars
+312:21  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./src/components/HomePageNew.tsx
+10:60  Error: 'FiTrendingUp' is defined but never used.  @typescript-eslint/no-unused-vars
+10:74  Error: 'FiMapPin' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/PasswordStrengthIndicator.tsx
+16:9  Warning: The 'requirements' array makes the dependencies of useMemo Hook (at line 66) change on every render. To fix this, wrap the initialization of 'requirements' in its own useMemo() Hook.  react-hooks/exhaustive-deps
+
+./src/components/PaymentSummary.tsx
+51:16  Error: 'err' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/ProductAIHelper.tsx
+45:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+88:42  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./src/components/ProductCard.tsx
+33:72  Error: 'onAddToCart' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/ProductsPageOptimized.tsx
+5:38  Error: 'where' is defined but never used.  @typescript-eslint/no-unused-vars
+5:45  Error: 'orderBy' is defined but never used.  @typescript-eslint/no-unused-vars
+10:36  Error: 'FiStar' is defined but never used.  @typescript-eslint/no-unused-vars
+41:10  Error: 'filteredProducts' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+52:10  Error: 'loadMoreMode' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+52:24  Error: 'setLoadMoreMode' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+74:10  Error: 'categories' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+74:22  Error: 'setCategories' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+161:6  Warning: React Hook useCallback has missing dependencies: 'categoryParam' and 'searchParam'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+564:25  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./src/components/SearchBar.tsx
+6:31  Error: 'limit' is defined but never used.  @typescript-eslint/no-unused-vars
+29:10  Error: 'isTyping' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/SecureCheckout.tsx
+37:10  Error: 'step' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+37:16  Error: 'setStep' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+416:19  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/components/SecurityDashboard.tsx
+14:61  Error: 'Timestamp' is defined but never used.  @typescript-eslint/no-unused-vars
+50:6  Warning: React Hook useEffect has a missing dependency: 'loadSecurityData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/components/SquarePaymentForm.tsx
+8:20  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+9:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+10:36  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+11:33  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+18:25  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+39:44  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+40:36  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+147:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/components/SyncButton.tsx
+53:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/hooks/useAuth.ts
+9:3  Error: 'createUserWithEmailAndPassword' is defined but never used.  @typescript-eslint/no-unused-vars
+13:3  Error: 'confirmPasswordReset' is defined but never used.  @typescript-eslint/no-unused-vars
+14:3  Error: 'verifyPasswordResetCode' is defined but never used.  @typescript-eslint/no-unused-vars
+76:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+162:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/hooks/useProducts.ts
+28:50  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/lib/cache.ts
+9:40  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/lib/circuit-breaker.ts
+2:25  Error: 'SAFETY_THRESHOLDS' is defined but never used.  @typescript-eslint/no-unused-vars
+78:35  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/lib/email-sender.ts
+106:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+133:12  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+160:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+232:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/lib/email-service-simple.ts
+180:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/lib/firebaseUtils.ts
+8:3  Error: 'deleteDoc' is defined but never used.  @typescript-eslint/no-unused-vars
+10:3  Error: 'where' is defined but never used.  @typescript-eslint/no-unused-vars
+11:3  Error: 'orderBy' is defined but never used.  @typescript-eslint/no-unused-vars
+12:3  Error: 'limit' is defined but never used.  @typescript-eslint/no-unused-vars
+14:3  Error: 'Query' is defined but never used.  @typescript-eslint/no-unused-vars
+15:3  Error: 'DocumentReference' is defined but never used.  @typescript-eslint/no-unused-vars
+44:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+122:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+176:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+209:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+237:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+284:44  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/lib/googleSheets.ts
+1:10  Error: 'google' is defined but never used.  @typescript-eslint/no-unused-vars
+4:15  Error: 'writeBatch' is defined but never used.  @typescript-eslint/no-unused-vars
+4:48  Error: 'query' is defined but never used.  @typescript-eslint/no-unused-vars
+4:55  Error: 'where' is defined but never used.  @typescript-eslint/no-unused-vars
+24:7  Error: 'createJwtClient' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+185:19  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/lib/security.ts
+156:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+176:81  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+220:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+276:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+321:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+368:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+390:58  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/lib/shipping-new.ts
+136:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+190:5  Error: '_packageDetails' is defined but never used.  @typescript-eslint/no-unused-vars
+190:22  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+191:5  Error: '_address' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/lib/shipping.ts
+12:11  Error: 'CartItem' is defined but never used.  @typescript-eslint/no-unused-vars
+71:13  Error: 'totalValue' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+190:50  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+207:54  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/lib/square-inventory.ts
+58:41  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+76:66  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+119:77  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+143:15  Error: 'key' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+241:5  Error: 'reason' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+280:28  Error: 'collection' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/lib/square-new.ts
+68:30  Error: 'imageIds' is defined but never used.  @typescript-eslint/no-unused-vars
+121:1  Warning: Assign object to a variable before exporting as module default  import/no-anonymous-default-export
+
+./src/lib/square-simple.ts
+26:20  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+59:33  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+83:78  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+124:84  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+189:65  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+257:92  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+260:50  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+261:57  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+262:55  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+264:45  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+401:110  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+529:60  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/lib/storage.ts
+71:59  Error: 'size' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/lib/utils.ts
+141:46  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+141:56  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+157:1  Warning: Assign object to a variable before exporting as module default  import/no-anonymous-default-export
+
+./src/types/global.d.ts
+8:29  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+17:12  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+18:20  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+19:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+24:13  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+30:27  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/app/api-reference/config/eslint#disabling-rules
