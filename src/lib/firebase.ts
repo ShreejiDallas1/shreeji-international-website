@@ -16,36 +16,17 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-// Initialize Firebase
-import { getApps, getApp, FirebaseApp } from "firebase/app";
-import { Auth } from "firebase/auth";
-import { Firestore } from "firebase/firestore";
-import { FirebaseStorage } from "firebase/storage";
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const storage = getStorage(app);
 
-let app: FirebaseApp;
-let auth: Auth;
-let db: Firestore;
-let storage: FirebaseStorage;
+// Set auth persistence to local (survives browser close/refresh)
+setPersistence(auth, browserLocalPersistence).catch((error) => {
+  console.error("Error setting Firebase persistence:", error);
+});
 
-if (!firebaseConfig.apiKey) {
-  // If API key is missing (e.g. during build), log warning but don't crash
-  console.warn("⚠️ Firebase API Key is missing. Skipping initialization. Check .env.local if this happens at runtime.");
-} else {
-  try {
-    app = getApps().length ? getApp() : initializeApp(firebaseConfig);
-    auth = getAuth(app);
-    db = getFirestore(app);
-    storage = getStorage(app);
-
-    // Set auth persistence
-    setPersistence(auth, browserLocalPersistence).catch((error) => {
-      console.error("Error setting Firebase persistence:", error);
-    });
-
-    console.log("Firebase initialized with project:", firebaseConfig.projectId);
-  } catch (error) {
-    console.error("❌ Firebase initialization error:", error);
-  }
-}
+// Log initialization for debugging
+console.log("Firebase initialized with project:", firebaseConfig.projectId);
 
 export { app, auth, db, storage };

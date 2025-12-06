@@ -20,7 +20,7 @@ export default function ComingSoonModal({ isOpen, onClose, feature = "Shopping" 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[9999] flex items-center justify-center p-4"
+            className="fixed inset-0 bg-black bg-opacity-50 z-[9999] flex items-center justify-center p-4"
             onClick={onClose}
           >
             {/* Modal */}
@@ -28,7 +28,7 @@ export default function ComingSoonModal({ isOpen, onClose, feature = "Shopping" 
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-[90%] sm:w-full max-w-md md:max-w-lg p-6 relative mx-4"
+              className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-sm w-full p-6 relative mx-4"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close Button */}

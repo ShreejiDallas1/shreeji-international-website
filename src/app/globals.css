@@ -258,22 +258,22 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #84cc16;
+  background: #cbd5e1;
   border-radius: 5px;
   border: 2px solid transparent;
   background-clip: content-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #65a30d;
+  background: #94a3b8;
   border: 2px solid transparent;
   background-clip: content-box;
 }
 
 .dark ::-webkit-scrollbar-thumb {
-  background: #65a30d;
+  background: #475569;
 }
 
 .dark ::-webkit-scrollbar-thumb:hover {
-  background: #4d7c0f;
+  background: #64748b;
 }
